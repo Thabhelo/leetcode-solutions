@@ -10,13 +10,14 @@ class Node:
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         if not head: return None
-        
+
         # Step 1: Create interleaved copies
         dummy = head
         while dummy:
             copy = Node(dummy.val, dummy.next, dummy.random)
             dummy.next = copy
             dummy = copy.next
+            # 7 -> 7' -> 13 -> 13' -> 11 -> 11' -> 10 -> 10' -> 1 -> 1'
 
         # Step 2: Separate the original and copied lists
         dummy, copy_head = head.next, head.next
