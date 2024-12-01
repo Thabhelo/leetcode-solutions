@@ -1,6 +1,5 @@
 class Solution:
     def topKFrequent(self, words: List[str], k: int) -> List[str]:
-        # Count word frequencies
         count = Counter(words)
 
         # Sort by frequency (descending) and lexicographical order (ascending)
