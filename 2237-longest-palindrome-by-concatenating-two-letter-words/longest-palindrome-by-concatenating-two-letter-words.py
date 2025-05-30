@@ -3,7 +3,7 @@ class Solution:
         from collections import Counter
     
         count = Counter(words)
-        result = 0
+        result = 0 # we use this to count the length and keep track of the longest, we dont care what the actual palindrome is, just its length.
         center_used = False
         
         for word in count:
@@ -17,7 +17,7 @@ class Solution:
                     center_used = True
                     
             else:  # Non-palindromic word like "ab"
-                reverse_word = word[1] + word[0]  # "ba" for "ab"
+                reverse_word = word[1] + word[0]
                 
                 if reverse_word in count and count[word] > 0:
                     pairs = min(count[word], count[reverse_word])
