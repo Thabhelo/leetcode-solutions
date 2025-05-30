@@ -17,7 +17,7 @@ class Solution:
                     center_used = True
                     
             else:  # Non-palindromic word like "ab"
-                reverse_word = word[1] + word[0]
+                reverse_word = word[::-1]
                 
                 if reverse_word in count and count[word] > 0:
                     pairs = min(count[word], count[reverse_word])
