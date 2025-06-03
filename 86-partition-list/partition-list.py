@@ -8,7 +8,7 @@ class Solution:
         if not head:
             return None
         
-        # Queue to temporarily store the "big" nodes
+        # Queue to temporarily store the big nodes
         big_nodes_queue = deque()
         
         dummy = ListNode(0)
@@ -16,10 +16,10 @@ class Solution:
         prev = dummy
         curr = head
         
-        # First pass: remove big nodes and queue them, keep small nodes in place
+        # First pass: remove big nodes and load them in our queue, keep small nodes in place
         while curr:
             if curr.val >= x:
-                # Remove this node from current position and queue it
+                # Remove this guy from current position and queue him
                 big_nodes_queue.append(curr)
                 prev.next = curr.next  # Skip this node
                 curr = curr.next
@@ -28,8 +28,8 @@ class Solution:
                 prev = curr
                 curr = curr.next
         
-        # Now prev points to the last "small" node
-        # Append all the queued "big" nodes at the end
+        # Now prev points to the last small node
+        # Append all the queued big nodes at the end
         while big_nodes_queue:
             node = big_nodes_queue.popleft()
             prev.next = node
