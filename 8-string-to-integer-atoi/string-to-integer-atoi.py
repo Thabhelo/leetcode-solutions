@@ -1,44 +1,27 @@
 class Solution:
     def myAtoi(self, s: str) -> int:
-        # Step 1: Ignore leading whitespace
-        s = s.lstrip()
-        
-        # Handle empty string after stripping
-        if not s:
-            return 0
-        
-        # Step 2: Determine signedness
+        INT_MAX, INT_MIN = 2**31 - 1, -2**31
+        i, n = 0, len(s)
+        # Step 1: Skip leading whitespace
+        while i < n and s[i] == ' ':
+            i += 1
+
+        # Step 2: Check for optional sign
         sign = 1
-        index = 0
-        
-        if s[0] == '-':
-            sign = -1
-            index = 1
-        elif s[0] == '+':
-            sign = 1
-            index = 1
-        
-        # Step 3: Conversion - read digits
+        if i < n and s[i] == '-':
+            sign *= -1
+            i += 1
+        elif i < n and s[i] == '+':
+            i += 1
+
+        # Step 3: Convert digits to integer
         result = 0
-        
-        while index < len(s) and s[index].isdigit():
-            digit = int(s[index])
-            
-            # Check for overflow before adding the digit
-            # 32-bit signed integer range: [-2^31, 2^31 - 1]
-            if result > (2**31 - 1 - digit) // 10:
-                return 2**31 - 1 if sign == 1 else -2**31
-            
+        while i < n and s[i].isdigit():
+            digit = int(s[i])
+            # Check for overflow
+            if result > (INT_MAX - digit) // 10:
+                return INT_MAX if sign == 1 else INT_MIN
             result = result * 10 + digit
-            index += 1
+            i += 1
         
-        # Step 4: Apply sign and return
-        result = sign * result
-        
-        # Step 5: Handle rounding (clamping to 32-bit range)
-        if result < -2**31:
-            return -2**31
-        elif result > 2**31 - 1:
-            return 2**31 - 1
-        
-        return result
+        return sign * result
