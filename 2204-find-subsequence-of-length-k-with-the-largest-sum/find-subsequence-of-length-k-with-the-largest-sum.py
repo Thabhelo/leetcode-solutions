@@ -3,3 +3,4 @@ class Solution:
         for _ in range(len(nums) - k):
             nums.remove(min(nums))
         return nums
+ 
