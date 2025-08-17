@@ -10,7 +10,13 @@ class Solution:
                 matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
 
         # reverse the rows:
-        for row in matrix:
-            row.reverse()
+        for row in range(len(matrix)):
+            left, right = 0, n - 1
+            while left <= right:
+                matrix[row][left], matrix[row][right] = matrix[row][right], matrix[row][left]
+                left += 1
+                right -= 1
+
+
 
 
