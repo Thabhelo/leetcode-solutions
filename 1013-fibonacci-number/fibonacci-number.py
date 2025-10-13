@@ -1,4 +1,10 @@
 class Solution:
     def fib(self, n: int) -> int:
-        return self.fib(n-1) + self.fib(n-2) if n > 1 else n
+        if n <= 1: return n
+        a, b = 0, 1
+        for i in range(2, n+1):
+            temp = b
+            b = a + b
+            a = temp
+        return b
         
