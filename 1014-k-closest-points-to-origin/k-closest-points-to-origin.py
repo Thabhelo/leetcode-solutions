@@ -4,7 +4,7 @@ class Solution:
         # return heapq.nsmallest(k, points, key=lambda p: p[0]*p[0] + p[1]*p[1])
 
         def dist(x, y):
-            return x**2 + y**2
+            return math.sqrt(x**2 + y**2)
 
         heap = []
         for x, y in points:
