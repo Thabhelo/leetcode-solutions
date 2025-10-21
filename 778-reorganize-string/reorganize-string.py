@@ -1,55 +1,33 @@
-import collections
-import heapq
-
 class Solution:
     def reorganizeString(self, s: str) -> str:
-        # 1. Count character frequencies
-        counts = collections.Counter(s)
+        # Step 1: Count character frequencies
+        char_counts = Counter(s)
+        max_freq = max(char_counts.values())
         
-        # 2. Check for impossibility condition
-        # If any character count is greater than (length + 1) // 2, it's impossible.
-        max_freq = 0
-        for count in counts.values():
-            max_freq = max(max_freq, count)
-        
-        n = len(s)
-        if max_freq > (n + 1) // 2:
+        # If the most frequent character appears more than half the length of s, reorganization is impossible
+        if max_freq > (len(s) + 1) // 2:
             return ""
         
-        # 3. Build a Max Heap (Priority Queue)
-        # Python's heapq is a Min Heap, so we store negative frequencies 
-        # to simulate a Max Heap based on frequency.
-        pq = []
-        for char, freq in counts.items():
-            heapq.heappush(pq, (-freq, char))
-            
-        result = []
+        # Step 2: Sort characters by frequency in descending order
+        sorted_chars = sorted(char_counts.items(), key=lambda x: -x[1])
+        print(sorted_chars)
+        # Step 3: Flatten sorted characters by frequency order
+        sorted_s = []
+        for char, count in sorted_chars:
+            sorted_s.extend([char] * count)
         
-        # 4. Greedily construct the result string
-        # Process two most frequent characters at a time.
-        while len(pq) >= 2:
-            # Pop the two most frequent characters
-            neg_freq1, char1 = heapq.heappop(pq)
-            neg_freq2, char2 = heapq.heappop(pq)
-            
-            # Append them to the result
-            result.append(char1)
-            result.append(char2)
-            
-            # Decrease their frequencies and push back to the heap if they still remain
-            if neg_freq1 + 1 < 0:
-                heapq.heappush(pq, (neg_freq1 + 1, char1))
-            if neg_freq2 + 1 < 0:
-                heapq.heappush(pq, (neg_freq2 + 1, char2))
-                
-        # 5. Handle the remaining character (if any)
-        # If the heap is not empty, it must contain only one element, 
-        # and its frequency must be -1 (due to the impossibility check)
-        if pq:
-            neg_freq, char = heapq.heappop(pq)
-            # Since we already checked if max_freq > (n+1)//2, 
-            # the only remaining character must have a frequency of 1.
-            # (-neg_freq == 1)
-            result.append(char)
-            
-        return "".join(result)
+        # Step 4: Split the characters into two halves for alternation
+        mid = (len(sorted_s) + 1) // 2
+        left, right = sorted_s[:mid], sorted_s[mid:]
+        
+        # Step 5: Merge two halves in alternating order
+        result = []
+        for i in range(len(right)):
+            result.append(left[i])
+            result.append(right[i])
+        
+        # Append the last element if left has an extra character
+        if len(left) > len(right):
+            result.append(left[-1])
+        
+        return ''.join(result)
