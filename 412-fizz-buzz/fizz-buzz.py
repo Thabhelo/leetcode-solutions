@@ -1,15 +1,18 @@
 class Solution:
     def fizzBuzz(self, n: int) -> List[str]:
-        answer = []
-
-        for i in range(1, n + 1):
+        output = []
+        for i in range(1, n+1):
             if i % 3 == 0 and i % 5 == 0:
-                answer.append("FizzBuzz")
+                output.append("FizzBuzz")
             elif i % 3 == 0:
-                answer.append("Fizz")
+                output.append("Fizz")
             elif i % 5 == 0:
-                answer.append("Buzz")
+                output.append("Buzz")
             else:
-                answer.append(str(i))
-        return answer
+                output.append(str(i))
+
+        return output
+
+
+
         
