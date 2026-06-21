@@ -16,10 +16,9 @@ class Solution:
             total = val1 + val2 + carry
 
             carry = total // 10
-            out_val = total % 10
 
             # Create the new node and advance the pointer
-            curr.next = ListNode(out_val)
+            curr.next = ListNode(total % 10)
             curr = curr.next
 
             if l1:
