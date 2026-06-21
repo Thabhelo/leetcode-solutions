@@ -8,30 +8,42 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        if not head or not head.next or not head.next.next:
+        if not head or not head.next:
             return
+        # 1. reverse the second half
+        # 2. now merge them
 
-        # find the middle
-        slow, fast = head, head
+        # 1. Find the middle of the linked list
+        slow = head
+        fast = head
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-
-        # reverse second half
+        
+        # second_head starts at the beginning of the second half
+        second_head = slow.next
+        slow.next = None  # Split the list into two halves
+        # reverse the second linked list
         prev = None
-        cur = slow.next
-        slow.next = None
-        while cur:
-            next = cur.next
-            cur.next = prev
-            prev = cur
-            cur = next
+        curr = second_head
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        second_head = prev
 
-        # merge halves
-        first, second = head, prev
-        while second:
-            n1, n2 = first.next, second.next
-            first.next = second
-            second.next = n1
-            first = n1
-            second = n2
+        # 2. interleave/Merge the two halves unconditionally
+        first_head = head
+        while second_head:
+            # Save next nodes
+            tmp1 = first_head.next
+            tmp2 = second_head.next
+            
+            # Interleave pointers
+            first_head.next = second_head
+            second_head.next = tmp1
+            
+            # Move pointers forward
+            first_head = tmp1
+            second_head = tmp2
