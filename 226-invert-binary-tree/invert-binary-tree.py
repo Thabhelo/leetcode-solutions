@@ -11,19 +11,20 @@ class Solution:
             # 2. Return None if empty
             return None
         
-        # Initialize a queue with the root node
-        queue = deque([root])
+        # Initialize a stack with the root node
+        stack = [root]
         
-        while queue:
-            current = queue.popleft()
+        while stack:
+            # Pop the most recently added node (LIFO)
+            current = stack.pop()
             
             # Swap the current node's children
             current.left, current.right = current.right, current.left
             
-            # Add valid children to the queue to be processed later
+            # Push valid children onto the stack to process next
             if current.left:
-                queue.append(current.left)
+                stack.append(current.left)
             if current.right:
-                queue.append(current.right)
+                stack.append(current.right)
                 
         return root
