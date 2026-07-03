@@ -6,12 +6,24 @@
 #         self.right = right
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root: return None
-
-        left = self.invertTree(root.left)
-        right = self.invertTree(root.right)
+        # 1. Null check
+        if not root:
+            # 2. Return None if empty
+            return None
         
-        # Swap the children
-        root.left, root.right = root.right, root.left
+        # Initialize a queue with the root node
+        queue = deque([root])
         
+        while queue:
+            current = queue.popleft()
+            
+            # Swap the current node's children
+            current.left, current.right = current.right, current.left
+            
+            # Add valid children to the queue to be processed later
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)
+                
         return root
