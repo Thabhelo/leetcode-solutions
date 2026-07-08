@@ -5,16 +5,20 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def pathSumUtil(self, node: Optional[TreeNode], currSum: int, targetSum: int) -> bool:
-        if not node: return False
-
-        if not node.left and not node.right:
-            return currSum + node.val == targetSum
-
-        return self.pathSumUtil(node.left, currSum+node.val, targetSum) or self.pathSumUtil(node.right, currSum+node.val, targetSum)
-
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        return self.pathSumUtil(root, 0, targetSum)
+        # Base case: an empty node/tree has no paths
+        if not root:
+            return False
+        
+        # If it's a leaf node, check if the remaining sum equals the node's value
+        if not root.left and not root.right:
+            return root.val == targetSum
+        
+        # Decrement targetSum by the current node's value for the subtrees
+        remaining_sum = targetSum - root.val
+        
+        # Return True if either the left path or right path finds the target sum
+        return self.hasPathSum(root.left, remaining_sum) or self.hasPathSum(root.right, remaining_sum)
         
 
         
